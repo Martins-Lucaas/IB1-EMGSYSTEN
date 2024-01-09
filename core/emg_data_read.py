@@ -4,9 +4,9 @@ from emg_extract import features_estimation
 from pathlib import Path
 
 # Carregar dados do arquivo Excel
-caminho_sinal = Path('IB1-EMGSYSTEN/dados/emg.xlsx')
+caminho_sinal = Path('../IB1-EMGSYSTEN/dados/emg.xlsx')
 sinal_emg = pd.read_excel(caminho_sinal).values
-nome_canal = 'ovo esquerdo'
+nome_canal = 'Mão Direita'
 
 # Frequência de amostragem de 2000 (2000 amostras por segundo)
 frequencia_amostragem = 2e3
