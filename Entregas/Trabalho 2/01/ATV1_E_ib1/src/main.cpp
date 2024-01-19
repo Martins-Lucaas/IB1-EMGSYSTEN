@@ -3,7 +3,7 @@
 hw_timer_t *timer = NULL;
 const int intervaloMicrossegundos = 1000000;
 
-const int ledPins[] = {0, 2, 4, 15};
+const int ledPins[] = {15, 2, 0, 4};
 const int numLeds = sizeof(ledPins) / sizeof(ledPins[0]);
 int currentLed = 0;
 
@@ -12,24 +12,24 @@ volatile int valorPot = 0;
 volatile unsigned long previousMillis = 0;
 
 void IRAM_ATTR onTimer() {
-  valorPot = analogRead(potPin); // Executar a leitura do potenciômetro
-  Serial.print("Frequencia do LED: ");
-  Serial.println(valorPot/5);
+  valorPot = analogRead(potPin); // Read the potentiometer value
+  Serial.print("LED Frequency: ");
+  Serial.println(valorPot / 5);
 }
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
 
-  // Inicializar o temporizador
+  // Initialize the timer
   timer = timerBegin(0, 80, true);
 
-  // Anexar a função de interrupção ao temporizador
+  // Attach the interrupt function to the timer
   timerAttachInterrupt(timer, &onTimer, true);
 
-  // Definir a frequência do temporizador (intervalo de recarga)
+  // Set the timer frequency (reload interval)
   timerAlarmWrite(timer, intervaloMicrossegundos, true);
 
-  // Ativar a interrupção por estouro do temporizador
+  // Enable the timer overflow interrupt
   timerAlarmEnable(timer);
 
   for (int i = 0; i < numLeds; i++) {
@@ -38,11 +38,11 @@ void setup() {
 }
 
 void loop() {
-  // Verifica se tempo suficiente passou para mudar para o próximo LED
+  // Check if enough time has passed to switch to the next LED
   if (millis() - previousMillis >= valorPot) {
     previousMillis = millis();
 
-    // Lógica para acionar LEDs
+    // Logic to control LEDs
     for (int i = 0; i < numLeds; i++) {
       digitalWrite(ledPins[i], LOW);
     }
