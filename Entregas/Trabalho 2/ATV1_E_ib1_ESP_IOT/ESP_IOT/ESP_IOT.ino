@@ -2,8 +2,8 @@
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 
-const char* ssid = "Martins WiFi6";
-const char* password = "17031998";
+const char* ssid = "Net";
+const char* password = "12345678";
 
 const int ledPins[] = {5,18,19,21};
 const int numLeds = sizeof(ledPins) / sizeof(ledPins[0]);
@@ -32,9 +32,9 @@ const char index_html[] PROGMEM = R"rawliteral(
   </style>
 </head>
 <body>
-  <h2>ESP32 Blink Speed Control Web Server</h2>
+  <h2>Controle da Velocidade do LED pela WEB para ESP32</h2>
   <p>Velocidade de Piscada:  <span id="textslider_value">%SLIDERVALUE%</span></p>
-  <p><input type="range" onchange="updateSliderSpeed(this)" id="speedSlider" min="1" max="1000" value="%SLIDERVALUE%" step="1" class="slider"></p>
+  <p><input type="range" onchange="updateSliderSpeed(this)" id="speedSlider" min="1" max="2000" value="%SLIDERVALUE%" step="1" class="slider"></p>
 <script>
 function updateSliderSpeed(element) {
   var slider_value = document.getElementById("speedSlider").value;
