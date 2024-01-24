@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ESP32 Analog Read Plot</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    html {font-family: Times New Roman; display: inline-block; text-align: center;}
+    h2 {font-size: 2.3rem;}
+    p {font-size: 1.9rem;}
+    body {max-width: 600px; margin: 0px auto; padding-bottom: 25px;}
+    .slider { -webkit-appearance: none; margin: 14px; width: 360px; height: 25px; background: #38c0ff  ;
+      outline: none; -webkit-transition: .2s; transition: opacity .2s;}
+    .slider::-webkit-slider-thumb {-webkit-appearance: none; appearance: none; width: 35px; height: 35px; background:#01070a; cursor: pointer;}
+    .slider::-moz-range-thumb { width: 35px; height: 35px; background: #01070a; cursor: pointer; } 
+  </style>
+</head>
+<body>
+  <h2>ESP32 Analog Read Plot</h2>
+  <div id="graph"></div>
+  <p>Velocidade de Piscada:  <span id="textslider_value">%SLIDERVALUE%</span></p>
+  <p><input type="range" onchange="updateSliderSpeed(this)" id="speedSlider" min="1" max="2000" value="%SLIDERVALUE%" step="1" class="slider"></p>
+  <script>
+  var data = [{
+    x: [],
+    y: [],
+    type: 'scatter',
+    mode: 'lines+points',
+    line: {color: '#1f77b4'}
+  }];
+
+  var layout = {
+    title: 'Leitura Analógica em Tempo Real',
+    xaxis: {
+      title: 'Tempo'
+    },
+    yaxis: {
+      title: 'Valor Lido'
+    }
+  };
+
+  var config = {
+    responsive: true
+  };
+
+  var graph = Plotly.newPlot('graph', data, layout, config);
+
+  function updateSliderSpeed(element) {
+    var slider_value = document.getElementById("speedSlider").value;
+    document.getElementById("textslider_value").innerHTML = slider_value;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/slider?value="+slider_value, true);
+    xhr.send();
+
+    // Adiciona a leitura da porta analógica aqui
+    var xhr_analog = new XMLHttpRequest();
+    xhr_analog.onreadystatechange = function() {
+      if (xhr_analog.readyState == 4 && xhr_analog.status == 200) {
+        var analogValue = parseInt(xhr_analog.responseText);
+        var currentTime = new Date();
+
+        // Adiciona os novos pontos ao gráfico
+        Plotly.extendTraces('graph', {x: [[slider_value]], y: [[analogValue]]}, [0]);
+
+        // Limite o número de pontos no gráfico para evitar sobrecarga
+        var maxLength = 50;
+        var xData = graph.data[0].x;
+        var yData = graph.data[0].y;
+        if (xData.length > maxLength) {
+          xData.shift();
+          yData.shift();
+        }
+      }
+    };
+    xhr_analog.open("GET", "/analog", true);
+    xhr_analog.send();
+  }
+  </script>
+</body>
+</html>
