@@ -56,8 +56,21 @@ String processor(const String& var){
   return String();
 }
 
+volatile int valorPot = 0;
+volatile bool shouldPrint = false;
+
+void IRAM_ATTR onTimer() {
+  valorPot = analogRead(potPin);  // Lê o valor do potenciômetro
+  shouldPrint = true;  // Sinaliza que o valor deve ser impresso no loop principal
+}
+
 void setup(){
   Serial.begin(115200);
+
+  My_timer = timerBegin(0, 80, true);
+  timerAttachInterrupt(My_timer, &onTimer, true);
+  timerAlarmWrite(My_timer, 100000, true);
+  timerAlarmEnable(My_timer);  // Ativa o temporizador
 
     for (int i = 0; i < numLeds; i++) {
       pinMode(ledPins[i], OUTPUT);
