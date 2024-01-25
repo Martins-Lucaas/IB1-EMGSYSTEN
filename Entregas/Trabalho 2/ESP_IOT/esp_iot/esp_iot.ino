@@ -2,8 +2,8 @@
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 
-const char* ssid = "Net";
-const char* password = "12345678";
+const char* ssid = "Martins WiFi6";
+const char* password = "17031998";
 
 const int ledPins[] = {5,18,19,21};
 const int numLeds = sizeof(ledPins) / sizeof(ledPins[0]);
@@ -94,9 +94,6 @@ void setup(){
 void loop() {
   static unsigned long previousMillis = 0;
   int interval = slider_value.toInt();
-  
-  // Garante que o intervalo está dentro dos limites
-  interval = constrain(interval, 1, 1000);
   
   unsigned long currentMillis = millis();
 
