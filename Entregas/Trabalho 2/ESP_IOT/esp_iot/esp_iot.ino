@@ -33,7 +33,7 @@ const char index_html[] PROGMEM = R"rawliteral(
 </head>
 <body>
   <h2>Controle da Velocidade do LED pela WEB para ESP32</h2>
-  <p>Velocidade de Piscada:  <span id="textslider_value">%SLIDERVALUE%</span></p>
+  <p>Intervalo de Piscada:  <span id="textslider_value">%SLIDERVALUE%</span></p>
   <p><input type="range" onchange="updateSliderSpeed(this)" id="speedSlider" min="1" max="2000" value="%SLIDERVALUE%" step="1" class="slider"></p>
 <script>
 function updateSliderSpeed(element) {
