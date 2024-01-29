@@ -2,8 +2,10 @@
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 
-const char* ssid = "Martins WiFi6";
-const char* password = "17031998";
+const char* ssid = "Net";
+const char* password = "12345678";
+
+hw_timer_t *My_timer = NULL;
 
 const int ledPins[] = {5,18,19,21};
 const int numLeds = sizeof(ledPins) / sizeof(ledPins[0]);
@@ -56,12 +58,19 @@ String processor(const String& var){
   return String();
 }
 
-volatile int valorPot = 0;
-volatile bool shouldPrint = false;
-
 void IRAM_ATTR onTimer() {
-  valorPot = analogRead(potPin);  // Lê o valor do potenciômetro
-  shouldPrint = true;  // Sinaliza que o valor deve ser impresso no loop principal
+    server.on("/slider", HTTP_GET, [] (AsyncWebServerRequest *request) {
+    String message;
+    if (request->hasParam(input_parameter)) {
+      message = request->getParam(input_parameter)->value();
+      slider_value = message;
+    }
+    else {
+      message = "No message sent";
+    }
+    Serial.println(message);
+    request->send(200, "text/plain", "OK");
+  });
 }
 
 void setup(){
@@ -86,19 +95,6 @@ void setup(){
 
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send_P(200, "text/html", index_html, processor);
-  });
-
-  server.on("/slider", HTTP_GET, [] (AsyncWebServerRequest *request) {
-    String message;
-    if (request->hasParam(input_parameter)) {
-      message = request->getParam(input_parameter)->value();
-      slider_value = message;
-    }
-    else {
-      message = "No message sent";
-    }
-    Serial.println(message);
-    request->send(200, "text/plain", "OK");
   });
   
   server.begin();
