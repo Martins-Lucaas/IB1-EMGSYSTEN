@@ -11,6 +11,10 @@ const int ledPins[] = {5,18,19,21};
 const int numLeds = sizeof(ledPins) / sizeof(ledPins[0]);
 int currentLed = 0;
 
+const int potPin = 34;  // Pino analógico ao qual o potenciômetro está conectado
+volatile int valorPot = 0;
+
+
 String slider_value = "0";
 
 const char* input_parameter = "value";
@@ -78,7 +82,7 @@ void setup(){
 
   My_timer = timerBegin(0, 80, true);
   timerAttachInterrupt(My_timer, &onTimer, true);
-  timerAlarmWrite(My_timer, 100000, true);
+  timerAlarmWrite(My_timer, 1000000, true);
   timerAlarmEnable(My_timer);  // Ativa o temporizador
 
     for (int i = 0; i < numLeds; i++) {
@@ -101,6 +105,11 @@ void setup(){
 }
 
 void loop() {
+
+  valorPot = analogRead(potPin);  // Lê o valor do potenciômetro4
+  Serial.print("Valor do potenciômetro: ");
+  Serial.println(valorPot);
+
   static unsigned long previousMillis = 0;
   int interval = slider_value.toInt();
   
