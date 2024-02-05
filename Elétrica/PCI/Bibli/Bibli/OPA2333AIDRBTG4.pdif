@@ -1,0 +1,393 @@
+;Proteus Design Interchange Format
+
+(PDIF
+  (vendor "Labcenter Electronics")
+  (version 1 0)
+  (library
+    (part "OPA2333AIDRBTG4"
+      (family "ANA")
+      (package "IC_DRV8601DRBT")
+      (description "_1.8V,_17A,_2_channels,_microPower,_Precision,_Zero_Drift_CMOS_Op_Amp_8-SON_-40_to_125_")
+      (attribute "PKG_TYPE" "IC_DRV8601DRBT")
+      (attribute "MF" "Texas_Instruments")
+      (attribute "PACKAGE" "VSON-8_Texas_Instruments")
+      (attribute "PRICE" "None")
+      (attribute "SNAPEDA_LINK" "https://www.snapeda.com/parts/OPA2333AIDRBTG4/Texas+Instruments/view-part/?ref=snap")
+      (attribute "MP" "OPA2333AIDRBTG4")
+      (attribute "PURCHASE-URL" "https://www.snapeda.com/api/url_track_click_mouser/?unipart_id=515482&manufacturer=Texas_Instruments&part_name=OPA2333AIDRBTG4&search_term=opa2333")
+      (attribute "AVAILABILITY" "In_Stock")
+      (attribute "CHECK_PRICES" "https://www.snapeda.com/parts/OPA2333AIDRBTG4/Texas+Instruments/view-part/?ref=eda")
+      (gate
+        (swap 1)
+        (symbol "OPA2333AIDRBTG4")
+        (pin "+IN_A" 3 (type IP))
+        (pin "+IN_B" 5 (type IP))
+        (pin "-IN_A" 2 (type IP))
+        (pin "-IN_B" 6 (type IP))
+        (pin "EP" 9 (type IO))
+        (pin "OUT_A" 1 (type OP))
+        (pin "OUT_B" 7 (type OP))
+        (pin "V+" 8 (type PP))
+        (pin "V-" 4 (type PP))
+      )
+    )
+    (symbol "OPA2333AIDRBTG4"
+      (units THOU)
+      (graphic
+        (stroke 1)
+        (path (pt -500 600) (pt 500 600) (pt 500 -600) (pt -500 -600) (pt -500 600) (closed))
+      )
+      (terminal
+        (body (symbol "PIN_R0_U_L200") (pt -700.0 300.0) (rot 0) (mir 0) (visible true))
+        (name (pt 239.37 0.0) (rot 0) (just MIDDLE LEFT) (visible true))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE LEFT) (visible true))
+      )
+      (terminal
+        (body (symbol "PIN_R0_U_L200") (pt -700.0 200.0) (rot 0) (mir 0) (visible true))
+        (name (pt 239.37 0.0) (rot 0) (just MIDDLE LEFT) (visible true))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE LEFT) (visible true))
+      )
+      (terminal
+        (body (symbol "PIN_R0_U_L200") (pt -700.0 100.0) (rot 0) (mir 0) (visible true))
+        (name (pt 239.37 0.0) (rot 0) (just MIDDLE LEFT) (visible true))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE LEFT) (visible true))
+      )
+      (terminal
+        (body (symbol "PIN_R0_U_L200") (pt -700.0 0.0) (rot 0) (mir 0) (visible true))
+        (name (pt 239.37 0.0) (rot 0) (just MIDDLE LEFT) (visible true))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE LEFT) (visible true))
+      )
+      (terminal
+        (body (symbol "PIN_R0_U_L200") (pt -700.0 -200.0) (rot 0) (mir 0) (visible true))
+        (name (pt 239.37 0.0) (rot 0) (just MIDDLE LEFT) (visible true))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE LEFT) (visible true))
+      )
+      (terminal
+        (body (symbol "PIN_R180_U_L200") (pt 700.0 300.0) (rot 0) (mir 0) (visible true))
+        (name (pt -239.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible true))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible true))
+      )
+      (terminal
+        (body (symbol "PIN_R180_U_L200") (pt 700.0 200.0) (rot 0) (mir 0) (visible true))
+        (name (pt -239.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible true))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible true))
+      )
+      (terminal
+        (body (symbol "PIN_R180_U_L200") (pt 700.0 500.0) (rot 0) (mir 0) (visible true))
+        (name (pt -239.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible true))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible true))
+      )
+      (terminal
+        (body (symbol "PIN_R180_U_L200") (pt 700.0 -400.0) (rot 0) (mir 0) (visible true))
+        (name (pt -239.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible true))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible true))
+      )
+    )
+    (symbol "PIN_R0_U_L200"
+      (units THOU)
+      (graphic
+        (stroke 6.5)
+        (path (pt 0.0 0.0) (pt 200.0 0.0))
+      )
+    )
+    (symbol "PIN_R180_U_L200"
+      (units THOU)
+      (graphic
+        (stroke 6.5)
+        (path (pt 0.0 0.0) (pt -200.0 0.0))
+      )
+    )
+    (package "IC_DRV8601DRBT"
+      (units THOU)
+      (layer TCOP
+        (graphic
+          (stroke 1)
+          (fill SOLID)
+          (pinid 8)
+          (path
+            (pt -29.53 34.45)
+            (pt -17.32 34.45)
+            (pt -17.32 66.93)
+            (pt -8.27 66.93)
+            (pt -8.27 34.45)
+            (pt 8.27 34.45)
+            (pt 8.27 66.93)
+            (pt 17.32 66.93)
+            (pt 17.32 34.45)
+            (pt 29.53 34.45)
+            (pt 29.53 -34.45)
+            (pt 17.32 -34.45)
+            (pt 17.32 -66.93)
+            (pt 8.27 -66.93)
+            (pt 8.27 -34.45)
+            (pt -8.27 -34.45)
+            (pt -8.27 -66.93)
+            (pt -17.32 -66.93)
+            (pt -17.32 -34.45)
+            (pt -29.53 -34.45)
+            (pt -29.53 34.45)
+            (closed)
+          )
+        )
+      )
+      (layer TASM
+        (graphic
+          (stroke 7.87)
+          (circle (pt -95.67 38.39) (pt -87.8 38.39))
+        )
+        (graphic
+          (stroke 5.0)
+          (path (pt -59.06 59.06) (pt 59.06 59.06))
+        )
+        (graphic
+          (stroke 5.0)
+          (path (pt -59.06 -59.06) (pt 59.06 -59.06))
+        )
+        (graphic
+          (stroke 5.0)
+          (path (pt -59.06 59.06) (pt -59.06 -59.06))
+        )
+        (graphic
+          (stroke 5.0)
+          (path (pt 59.06 59.06) (pt 59.06 -59.06))
+        )
+      )
+      (layer TSLK
+        (graphic
+          (stroke 7.87)
+          (circle (pt -95.67 38.39) (pt -87.8 38.39))
+        )
+        (graphic
+          (stroke 5.0)
+          (path (pt -59.06 59.06) (pt -29.92 59.06))
+        )
+        (graphic
+          (stroke 5.0)
+          (path (pt 29.92 59.06) (pt 59.06 59.06))
+        )
+        (graphic
+          (stroke 5.0)
+          (path (pt -59.06 -59.06) (pt -29.92 -59.06))
+        )
+        (graphic
+          (stroke 5.0)
+          (path (pt 29.92 -59.06) (pt 59.06 -59.06))
+        )
+      )
+      (layer TPST
+        (graphic
+          (stroke 1)
+          (path (pt -26.38 30.51) (pt 26.38 30.51) (pt 26.38 -30.51) (pt -26.38 -30.51) (pt -26.38 30.51) (closed))
+        )
+        (graphic
+          (stroke 1)
+          (fill SOLID)
+          (path
+            (pt -17.32 66.93)
+            (pt -8.27 66.93)
+            (pt -8.27 38.39)
+            (pt -17.32 38.39)
+            (pt -17.32 66.93)
+            (closed)
+          )
+        )
+        (graphic
+          (stroke 1)
+          (fill SOLID)
+          (path
+            (pt 8.27 66.93)
+            (pt 17.32 66.93)
+            (pt 17.32 38.39)
+            (pt 8.27 38.39)
+            (pt 8.27 66.93)
+            (closed)
+          )
+        )
+        (graphic
+          (stroke 1)
+          (fill SOLID)
+          (path
+            (pt 17.32 -66.93)
+            (pt 8.27 -66.93)
+            (pt 8.27 -38.39)
+            (pt 17.32 -38.39)
+            (pt 17.32 -66.93)
+            (closed)
+          )
+        )
+        (graphic
+          (stroke 1)
+          (fill SOLID)
+          (path
+            (pt -8.27 -66.93)
+            (pt -17.32 -66.93)
+            (pt -17.32 -38.39)
+            (pt -8.27 -38.39)
+            (pt -8.27 -66.93)
+            (closed)
+          )
+        )
+      )
+      (layer TRES
+        (graphic
+          (stroke 1)
+          (fill SOLID)
+          (path
+            (pt -32.28 37.2)
+            (pt -20.08 37.2)
+            (pt -20.08 69.69)
+            (pt -5.51 69.69)
+            (pt -5.51 37.2)
+            (pt 5.51 37.2)
+            (pt 5.51 69.69)
+            (pt 20.08 69.69)
+            (pt 20.08 37.2)
+            (pt 32.28 37.2)
+            (pt 32.28 -37.2)
+            (pt 20.08 -37.2)
+            (pt 20.08 -69.69)
+            (pt 5.51 -69.69)
+            (pt 5.51 -37.2)
+            (pt -5.51 -37.2)
+            (pt -5.51 -69.69)
+            (pt -20.08 -69.69)
+            (pt -20.08 -37.2)
+            (pt -32.28 -37.2)
+            (pt -32.28 37.2)
+            (closed)
+          )
+        )
+        (graphic
+          (stroke 1)
+          (path (pt -69.69 47.24) (pt -40.55 47.24) (pt -40.55 29.53) (pt -69.69 29.53) (pt -69.69 47.24) (closed))
+        )
+        (graphic
+          (stroke 1)
+          (path (pt 40.55 47.24) (pt 69.69 47.24) (pt 69.69 29.53) (pt 40.55 29.53) (pt 40.55 47.24) (closed))
+        )
+        (graphic
+          (stroke 1)
+          (path (pt -69.69 21.65) (pt -40.55 21.65) (pt -40.55 3.94) (pt -69.69 3.94) (pt -69.69 21.65) (closed))
+        )
+        (graphic
+          (stroke 1)
+          (path (pt -69.69 -3.94) (pt -40.55 -3.94) (pt -40.55 -21.65) (pt -69.69 -21.65) (pt -69.69 -3.94) (closed))
+        )
+        (graphic
+          (stroke 1)
+          (path (pt -69.69 -29.53) (pt -40.55 -29.53) (pt -40.55 -47.24) (pt -69.69 -47.24) (pt -69.69 -29.53) (closed))
+        )
+        (graphic
+          (stroke 1)
+          (path (pt 40.55 21.65) (pt 69.69 21.65) (pt 69.69 3.94) (pt 40.55 3.94) (pt 40.55 21.65) (closed))
+        )
+        (graphic
+          (stroke 1)
+          (path (pt 40.55 -3.94) (pt 69.69 -3.94) (pt 69.69 -21.65) (pt 40.55 -21.65) (pt 40.55 -3.94) (closed))
+        )
+        (graphic
+          (stroke 1)
+          (path (pt 40.55 -29.53) (pt 69.69 -29.53) (pt 69.69 -47.24) (pt 40.55 -47.24) (pt 40.55 -29.53) (closed))
+        )
+      )
+      (layer OCCA
+        (graphic
+          (stroke 1.97)
+          (path (pt -76.77 76.77) (pt 76.77 76.77))
+        )
+        (graphic
+          (stroke 1.97)
+          (path (pt -76.77 -76.77) (pt 76.77 -76.77))
+        )
+        (graphic
+          (stroke 1.97)
+          (path (pt -76.77 76.77) (pt -76.77 -76.77))
+        )
+        (graphic
+          (stroke 1.97)
+          (path (pt 76.77 76.77) (pt 76.77 -76.77))
+        )
+      )
+      (leg 1 (pt -55.12 38.39) (padstack 1))
+      (leg 2 (pt -55.12 12.8) (padstack 2))
+      (leg 3 (pt -55.12 -12.8) (padstack 3))
+      (leg 4 (pt -55.12 -38.39) (padstack 4))
+      (leg 5 (pt 55.12 -38.39) (padstack 5))
+      (leg 6 (pt 55.12 -12.8) (padstack 6))
+      (leg 7 (pt 55.12 12.8) (padstack 7))
+      (leg 8 (pt 55.12 38.39) (padstack 8))
+      (leg 9 (pt 0 0) (padstack 9))
+      (leg 10 (pt 0 24.61) (padstack 10))
+      (leg 11 (pt 19.69 0) (padstack 11))
+      (leg 12 (pt -19.69 0) (padstack 12))
+      (leg 13 (pt 0 -24.61) (padstack 13))
+      (padstack 1
+        (pad (layer TCOP) (rectf 12.2 23.62 0 1.52 0))
+        (pad (layer TPST) (rectf 12.2 23.62 0 1.52 0))
+      )
+      (padstack 2
+        (pad (layer TCOP) (rectf 12.2 23.62 0 1.52 0))
+        (pad (layer TPST) (rectf 12.2 23.62 0 1.52 0))
+      )
+      (padstack 3
+        (pad (layer TCOP) (rectf 12.2 23.62 0 1.52 0))
+        (pad (layer TPST) (rectf 12.2 23.62 0 1.52 0))
+      )
+      (padstack 4
+        (pad (layer TCOP) (rectf 12.2 23.62 0 1.52 0))
+        (pad (layer TPST) (rectf 12.2 23.62 0 1.52 0))
+      )
+      (padstack 5
+        (pad (layer TCOP) (rectf 12.2 23.62 0 1.52 0))
+        (pad (layer TPST) (rectf 12.2 23.62 0 1.52 0))
+      )
+      (padstack 6
+        (pad (layer TCOP) (rectf 12.2 23.62 0 1.52 0))
+        (pad (layer TPST) (rectf 12.2 23.62 0 1.52 0))
+      )
+      (padstack 7
+        (pad (layer TCOP) (rectf 12.2 23.62 0 1.52 0))
+        (pad (layer TPST) (rectf 12.2 23.62 0 1.52 0))
+      )
+      (padstack 8
+        (pad (layer TCOP) (rectf 12.2 23.62 0 1.52 0))
+        (pad (layer TPST) (rectf 12.2 23.62 0 1.52 0))
+      )
+      (padstack 9
+        (pad (layer TCOP) (rectf 59.06 68.9 0 0.0 90.0))
+      )
+      (padstack 10
+        (hole 7)
+        (plated true)
+        (pad (layer TCOP) (round 15.75))
+        (pad (layer INNER) (round 15.75))
+        (pad (layer BCOP) (round 15.75))
+      )
+      (padstack 11
+        (hole 7)
+        (plated true)
+        (pad (layer TCOP) (round 15.75))
+        (pad (layer INNER) (round 15.75))
+        (pad (layer BCOP) (round 15.75))
+      )
+      (padstack 12
+        (hole 7)
+        (plated true)
+        (pad (layer TCOP) (round 15.75))
+        (pad (layer INNER) (round 15.75))
+        (pad (layer BCOP) (round 15.75))
+      )
+      (padstack 13
+        (hole 7)
+        (plated true)
+        (pad (layer TCOP) (round 15.75))
+        (pad (layer INNER) (round 15.75))
+        (pad (layer BCOP) (round 15.75))
+      )
+      (model OPA2333AIDRBTG4.step
+        (euler 0 0 0)
+        (offset 0 0 0)
+      )
+    )
+  )
+)
