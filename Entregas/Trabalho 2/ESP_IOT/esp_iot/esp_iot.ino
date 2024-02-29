@@ -2,18 +2,19 @@
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 
-const char* ssid = "Net";
-const char* password = "12345678";
+const char* ssid = "Martins WiFi6";
+const char* password = "17031998";
 
 hw_timer_t *My_timer = NULL;
 
-const int ledPins[] = {5,18,19,21};
+const int ledPins[] = {5, 18, 19};
 const int numLeds = sizeof(ledPins) / sizeof(ledPins[0]);
 int currentLed = 0;
 
 const int potPin = 34;  // Pino analógico ao qual o potenciômetro está conectado
 volatile int valorPot = 0;
 
+bool shouldprint = false;
 
 String slider_value = "0";
 
@@ -55,15 +56,45 @@ function updateSliderSpeed(element) {
 </html>
 )rawliteral";
 
-String processor(const String& var){
-  if (var == "SLIDERVALUE"){
+String processor(const String& var) {
+  if (var == "SLIDERVALUE") {
     return slider_value;
   }
   return String();
 }
 
 void IRAM_ATTR onTimer() {
-    server.on("/slider", HTTP_GET, [] (AsyncWebServerRequest *request) {
+  if (WiFi.status() == WL_CONNECTED) {
+    valorPot = analogRead(potPin);
+    shouldprint = true;
+  }
+}
+
+void setup() {
+  Serial.begin(115200);
+
+  My_timer = timerBegin(0, 80, true);
+  timerAttachInterrupt(My_timer, &onTimer, true);
+  timerAlarmWrite(My_timer, 1000, true);
+  timerAlarmEnable(My_timer);  // Ativa o temporizador
+
+  for (int i = 0; i < numLeds; i++) {
+    pinMode(ledPins[i], OUTPUT);
+  }
+
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.println("Connecting...");
+  }
+
+  Serial.println(WiFi.localIP());
+
+  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
+    request->send_P(200, "text/html", index_html, processor);
+  });
+
+  server.on("/slider", HTTP_GET, [] (AsyncWebServerRequest *request) {
     String message;
     if (request->hasParam(input_parameter)) {
       message = request->getParam(input_parameter)->value();
@@ -75,40 +106,16 @@ void IRAM_ATTR onTimer() {
     Serial.println(message);
     request->send(200, "text/plain", "OK");
   });
-}
-
-void setup(){
-  Serial.begin(115200);
-
-  My_timer = timerBegin(0, 80, true);
-  timerAttachInterrupt(My_timer, &onTimer, true);
-  timerAlarmWrite(My_timer, 1000000, true);
-  timerAlarmEnable(My_timer);  // Ativa o temporizador
-
-    for (int i = 0; i < numLeds; i++) {
-      pinMode(ledPins[i], OUTPUT);
-  }
-
-  WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(1000);
-    Serial.println("Connecting...");
-  }
-
-  Serial.println(WiFi.localIP());
-
-  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send_P(200, "text/html", index_html, processor);
-  });
   
   server.begin();
 }
 
 void loop() {
-
-  valorPot = analogRead(potPin);  // Lê o valor do potenciômetro4
-  Serial.print("Valor do potenciômetro: ");
-  Serial.println(valorPot);
+  if (shouldprint) {
+    Serial.print("Valor do potenciômetro: ");
+    Serial.println(valorPot);
+    shouldprint = false;
+  }
 
   static unsigned long previousMillis = 0;
   int interval = slider_value.toInt();
@@ -117,7 +124,7 @@ void loop() {
 
   if (currentMillis - previousMillis >= interval) {
     previousMillis = currentMillis;
-        // Lógica para acionar LEDs
+    
     for (int i = 0; i < numLeds; i++) {
       digitalWrite(ledPins[i], LOW);
     }

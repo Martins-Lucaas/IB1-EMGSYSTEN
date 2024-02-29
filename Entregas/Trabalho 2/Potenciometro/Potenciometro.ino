@@ -5,8 +5,12 @@ hw_timer_t *My_timer = NULL;
 volatile int valorPot = 0;
 volatile bool shouldPrint = false;
 
+const int ledPins[] = {5,18,19};
+const int numLeds = sizeof(ledPins) / sizeof(ledPins[0]);
+int currentLed = 0;
+
 void IRAM_ATTR onTimer() {
-  valorPot = analogRead(potPin);  // Lê o valor do potenciômetro
+  valorPot = analogRead(potPin);  // Lê o valor do potenciômetro"
   shouldPrint = true;  // Sinaliza que o valor deve ser impresso no loop principal
 
 }
@@ -26,5 +30,23 @@ void loop() {
     Serial.println(valorPot);
     shouldPrint = false;  // Reseta a flag
   }
+  
+  static unsigned long previousMillis = 0;
+
+  
+  unsigned long currentMillis = millis();
+
+  if (currentMillis - previousMillis >= valorPot/2) {
+    previousMillis = currentMillis;
+        // Lógica para acionar LEDs
+    for (int i = 0; i < numLeds; i++) {
+      digitalWrite(ledPins[i], LOW);
+    }
+
+    digitalWrite(ledPins[currentLed], HIGH);
+
+    currentLed = (currentLed + 1) % numLeds;
+  }
+
 
 }

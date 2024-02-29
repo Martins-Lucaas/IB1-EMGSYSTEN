@@ -1,0 +1,161 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Projeto IB1</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f2f2f2;
+    }
+    
+    .container {
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center; /* Para centralizar os botões */
+    }
+    
+    h2 {
+      font-size: 24px;
+      color: #333;
+    }
+    
+    p {
+      font-size: 18px;
+      color: #666;
+    }
+    
+    canvas {
+      width: 100%;
+      height: 200px;
+    }
+
+    .button {
+      border-radius: 20px;
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+      border: none;
+      color: white;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    .button.start[disabled] {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .button.start {
+      background-color: green;
+    }
+
+    .button.start:hover {
+      background-color: darkgreen;
+    }
+
+    .button.start:active {
+      background-color: forestgreen;
+    }
+
+    .button.stop {
+      background-color: red;
+    }
+
+    .button.stop:hover {
+      background-color: darkred;
+    }
+
+    .button.stop:active {
+      background-color: firebrick;
+    }
+
+    .button.save {
+      background-color: blue;
+    }
+
+    .button.save:hover {
+      background-color: darkblue;
+    }
+
+    .button.save:active {
+      background-color: royalblue;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Projeto IB1</h2>
+    <p>Valor do Potenciômetro: <span id="pot_value">0</span></p>
+    <canvas id="potChart"></canvas>
+    <button id="startButton" class="button start" onclick="start()" >Iniciar</button>
+    <button class="button stop" onclick="stop()">Parar</button>
+    <button class="button save" onclick="save()">Salvar</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    var ctx = document.getElementById('potChart').getContext('2d');
+    var potChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [{
+          label: 'Valor do Potenciômetro',
+          data: [],
+          fill: false,
+          borderColor: 'rgb(75, 192, 192)',
+          tension: 0.1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          x: {
+            type: 'linear',
+            position: 'bottom'
+          },
+          y: {
+            suggestedMin: 0,
+            suggestedMax: 1023
+          }
+        }
+      }
+    });
+
+    var timeElapsed = 0; // Variável para rastrear o tempo decorrido
+    var potValue = 0; // Valor inicial do potenciômetro
+
+    var intervalId;
+
+    function updatePotChart() {
+      timeElapsed += 1; // Incrementa o tempo decorrido
+      potValue +=0; // Incrementa o valor do potenciômetro linearmente
+      potChart.data.labels.push(timeElapsed); // Adiciona o tempo decorrido aos rótulos do eixo X
+      potChart.data.datasets[0].data.push(potValue);
+      potChart.update();
+    }
+
+    function start() {
+      intervalId = setInterval(updatePotChart, 1); // Iniciar atualização periódica
+      document.getElementById('startButton').disabled = true; // Desabilita o botão "Iniciar"
+    }
+
+    function stop() {
+      clearInterval(intervalId); // Parar atualização periódica
+      document.getElementById('startButton').disabled = false; // Habilita o botão "Iniciar"
+    }
+
+    function save() {
+      // Função para salvar, você pode adicionar o comportamento desejado aqui
+      alert("Dados salvos!");
+    }
+  </script>
+</body>
+</html>
