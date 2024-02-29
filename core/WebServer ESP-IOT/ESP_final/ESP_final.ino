@@ -1,8 +1,8 @@
 #include <WiFi.h>
 #include <WebServer.h>
 
-const char *ssid = "Martins WiFi6";
-const char *password = "17031998";
+const char *ssid = "Net";
+const char *password = "12345678";
 
 WebServer server(80);
 
@@ -125,7 +125,7 @@ void handleRoot() {
         "var timeElapsed = 0;"
         "var intervalId;"
         "function updatePotChart(potValue) {"
-          "timeElapsed += 0.2;" // Incrementa o tempo decorrido por 0.2 (200 ms)
+          "timeElapsed += 2;" // Incrementa o tempo decorrido por 0.2 (200 ms)
           "potChart.data.labels.push(timeElapsed);" // Adiciona o tempo decorrido aos rótulos do eixo X
           "potChart.data.datasets[0].data.push(potValue);" // Adiciona o valor do potenciômetro aos dados do gráfico
           "potChart.update();" // Atualiza o gráfico
@@ -134,14 +134,14 @@ void handleRoot() {
           "intervalId = setInterval(function() {"
             "var xhttp = new XMLHttpRequest();"
             "xhttp.onreadystatechange = function() {"
-              "if (this.readyState == 4 && this.status == 200) {"
+              "if (this.readyState == 4 && this.status == 10) {"
                 "document.getElementById('pot_value').innerHTML = this.responseText;"
                 "updatePotChart(parseInt(this.responseText));" // Atualiza o gráfico com o valor do potenciômetro
               "}"
             "};"
             "xhttp.open('GET', '/potValue', true);" // Envia uma solicitação para o servidor para obter o valor do potenciômetro
             "xhttp.send();"
-          "}, 10);" // Iniciar atualização periódica a cada 200 ms
+          "}, 1);" // Iniciar atualização periódica a cada 200 ms
           "document.getElementById('startButton').disabled = true;" // Desabilita o botão 'Iniciar'
         "}"
         "function stop() {"
@@ -154,7 +154,7 @@ void handleRoot() {
       "</script>"
     "</body>"
   "</html>";
-  server.send(200, "text/html", html);
+  server.send(10, "text/html", html);
 }
 
 void setup() {
@@ -175,8 +175,7 @@ void setup() {
 
   // Definir as rotas
   server.on("/", HTTP_GET, handleRoot);
-  server.on("/potValue", HTTP_GET, []() {
-    server.send(200, "text/plain", String(analogRead(34)));
+  server.on("/potValue", HTTP_GET, []() {server.send(10, "text/plain", String(analogRead(34)));
   });
 
   // Iniciar o servidor
