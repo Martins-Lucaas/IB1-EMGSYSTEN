@@ -1,8 +1,9 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
   <title>Projeto IB1</title>
+  <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -10,32 +11,40 @@
       padding: 0;
       background-color: #f2f2f2;
     }
-    
     .container {
-      max-width: 500px;
+      max-width: 800px; /* Aumentei a largura para acomodar o gráfico com mais detalhes */
       margin: 50px auto;
       padding: 20px;
       background-color: #fff;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      text-align: center; /* Para centralizar os botões */
+      text-align: center;
     }
-    
-    h2 {
+    .container h2 {
       font-size: 24px;
       color: #333;
     }
-    
-    p {
+    .container p {
       font-size: 18px;
       color: #666;
     }
-    
-    canvas {
+    .container canvas {
       width: 100%;
-      height: 200px;
+      height: 300px; /* Aumentei a altura para mostrar mais detalhes */
     }
-
+    .container table {
+      margin-top: 20px;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    .container th, .container td {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    .container th {
+      background-color: #f2f2f2;
+    }
     .button {
       border-radius: 20px;
       padding: 10px 20px;
@@ -46,60 +55,62 @@
       font-size: 16px;
       transition: background-color 0.3s ease;
     }
-
     .button.start[disabled] {
       background-color: #ccc;
       cursor: not-allowed;
     }
-
     .button.start {
       background-color: green;
     }
-
     .button.start:hover {
       background-color: darkgreen;
     }
-
     .button.start:active {
       background-color: forestgreen;
     }
-
     .button.stop {
       background-color: red;
     }
-
     .button.stop:hover {
       background-color: darkred;
     }
-
     .button.stop:active {
       background-color: firebrick;
     }
-
     .button.save {
       background-color: blue;
     }
-
     .button.save:hover {
       background-color: darkblue;
     }
-
     .button.save:active {
       background-color: royalblue;
+    }
+    .button.table {
+      background-color: orange;
+    }
+    .button.table:hover {
+      background-color: darkorange;
+    }
+    .button.table:active {
+      background-color: orangered;
+    }
+    .hidden {
+      display: none; /* Esconder a tabela por padrão */
     }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class='container'>
     <h2>Projeto IB1</h2>
-    <p>Valor do Potenciômetro: <span id="pot_value">0</span></p>
-    <canvas id="potChart"></canvas>
-    <button id="startButton" class="button start" onclick="start()" >Iniciar</button>
-    <button class="button stop" onclick="stop()">Parar</button>
-    <button class="button save" onclick="save()">Salvar</button>
+    <p>Valor do Potenciômetro: <span id='pot_value'>0</span></p>
+    <canvas id='potChart'></canvas>
+    <button id='startButton' class='button start' onclick='start()'>Iniciar</button>
+    <button class='button stop' onclick='stop()'>Parar</button>
+    <button class='button save' onclick='save()'>Salvar</button>
+    <button id='showTableButton' class='button table' onclick='showTable()'>Ver Tabela</button> <!-- Botão para mostrar a tabela -->
+    <div id='tableContainer' class='hidden'></div> <!-- Container para a tabela (inicialmente oculto) -->
   </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
     var ctx = document.getElementById('potChart').getContext('2d');
     var potChart = new Chart(ctx, {
@@ -119,42 +130,71 @@
         scales: {
           x: {
             type: 'linear',
-            position: 'bottom'
+            position: 'bottom',
+            ticks: {
+              // Definindo o passo dos ticks para representar 1 minuto (60 segundos)
+              stepSize: 60
+            }
           },
           y: {
             suggestedMin: 0,
-            suggestedMax: 1023
+            suggestedMax: 4095
           }
         }
       }
     });
 
-    var timeElapsed = 0; // Variável para rastrear o tempo decorrido
-    var potValue = 0; // Valor inicial do potenciômetro
-
+    var timeElapsed = 0;
     var intervalId;
 
-    function updatePotChart() {
-      timeElapsed += 1; // Incrementa o tempo decorrido
-      potValue +=0; // Incrementa o valor do potenciômetro linearmente
+    function updatePotChart(potValue) {
+      timeElapsed += 0.2; // Incrementa o tempo decorrido por 0.2 (200 ms)
       potChart.data.labels.push(timeElapsed); // Adiciona o tempo decorrido aos rótulos do eixo X
-      potChart.data.datasets[0].data.push(potValue);
-      potChart.update();
+      potChart.data.datasets[0].data.push(potValue); // Adiciona o valor do potenciômetro aos dados do gráfico
+      potChart.update(); // Atualiza o gráfico
+      // Atualização da tabela
+      var tableHTML = '<table><tr><th>Tempo (s)</th><th>Valor do Potenciômetro</th></tr>'; // Cabeçalho da tabela
+      for (var i = 0; i < potChart.data.labels.length; i++) { // Loop pelos valores
+        tableHTML += '<tr><td>' + potChart.data.labels[i].toFixed(1) + '</td><td>' + potChart.data.datasets[0].data[i] + '</td></tr>'; // Linha da tabela
+      }
+      tableHTML += '</table>'; // Fechamento da tabela
+      document.getElementById('tableContainer').innerHTML = tableHTML; // Atualização do conteúdo do contêiner da tabela
     }
 
     function start() {
-      intervalId = setInterval(updatePotChart, 1); // Iniciar atualização periódica
-      document.getElementById('startButton').disabled = true; // Desabilita o botão "Iniciar"
+      intervalId = setInterval(function() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            document.getElementById('pot_value').innerHTML = this.responseText;
+            updatePotChart(parseInt(this.responseText)); // Atualiza o gráfico com o valor do potenciômetro
+          }
+        };
+        xhttp.open('GET', '/potValue', true); // Envia uma solicitação para o servidor para obter o valor do potenciômetro
+        xhttp.send();
+      }, 10); // Iniciar atualização periódica a cada 200 ms
+      document.getElementById('startButton').disabled = true; // Desabilita o botão 'Iniciar'
     }
 
     function stop() {
       clearInterval(intervalId); // Parar atualização periódica
-      document.getElementById('startButton').disabled = false; // Habilita o botão "Iniciar"
+      document.getElementById('startButton').disabled = false; // Habilita o botão 'Iniciar'
     }
 
     function save() {
-      // Função para salvar, você pode adicionar o comportamento desejado aqui
-      alert("Dados salvos!");
+      alert('Dados salvos!'); // Exibe um alerta informando que os dados foram salvos
+    }
+
+    function showTable() {
+      var tableContainer = document.getElementById('tableContainer'); // Obtém o contêiner da tabela
+      if (tableContainer.classList.contains('hidden')) { // Verifica se a tabela está oculta
+        tableContainer.classList.remove('hidden'); // Remove a classe 'hidden' para exibir a tabela
+        document.getElementById('showTableButton').innerText = 'Ocultar Tabela'; // Atualiza o texto do botão
+        stop(); // Interrompe a atualização dos dados
+      } else { // Se a tabela estiver visível
+        tableContainer.classList.add('hidden'); // Adiciona a classe 'hidden' para ocultar a tabela
+        document.getElementById('showTableButton').innerText = 'Ver Tabela'; // Atualiza o texto do botão
+      }
     }
   </script>
 </body>
