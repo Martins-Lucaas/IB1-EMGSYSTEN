@@ -1,15 +1,9 @@
 #include <WiFi.h>
 #include <WebServer.h>
 
-<<<<<<< Updated upstream
 const char *ssid = "Net";
 const char *password = "12345678";
-=======
 hw_timer_t *My_timer = NULL;
-
-const char *ssid = "Martins WiFi6";
-const char *password = "17031998";
->>>>>>> Stashed changes
 
 WebServer server(80);
 
@@ -164,7 +158,6 @@ void handleRoot() {
         "var timeElapsed = 0;"
         "var intervalId;"
         "function updatePotChart(potValue) {"
-<<<<<<< Updated upstream
           "timeElapsed += 2;" // Incrementa o tempo decorrido por 0.2 (200 ms)
           "potChart.data.labels.push(timeElapsed);" // Adiciona o tempo decorrido aos rótulos do eixo X
           "potChart.data.datasets[0].data.push(potValue);" // Adiciona o valor do potenciômetro aos dados do gráfico
@@ -183,7 +176,6 @@ void handleRoot() {
             "xhttp.send();"
           "}, 1);" // Iniciar atualização periódica a cada 200 ms
           "document.getElementById('startButton').disabled = true;" // Desabilita o botão 'Iniciar'
-=======
           "timeElapsed += 0.2;"
           "potChart.data.labels.push(timeElapsed.toFixed(1));"
           "potChart.data.datasets[0].data.push(potValue);"
@@ -220,7 +212,6 @@ void handleRoot() {
             "document.getElementById('startButton').disabled = true;"
             "updatingData = true;"
           "}"
->>>>>>> Stashed changes
         "}"
         "function stop() {"
           "clearInterval(intervalId);"
@@ -244,12 +235,9 @@ void handleRoot() {
       "</script>"
     "</body>"
   "</html>";
-<<<<<<< Updated upstream
   server.send(10, "text/html", html);
-=======
 
   server.send(200, "text/html", html);
->>>>>>> Stashed changes
 }
 
 void setup() {
