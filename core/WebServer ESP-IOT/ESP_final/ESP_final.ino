@@ -17,8 +17,8 @@ unsigned long lastUpdateTime = 0;
 unsigned long lastReadTime = 0; // Variável para controlar o intervalo de leitura da resistência
 const unsigned long readInterval = 500; // Intervalo de leitura da resistência em milissegundos
 
-const int pinEMG = 34; // Porta do ESP conectada ao potenciômetro
-const int pinPot = 32;
+const int pinEMG = 33; // Porta do ESP conectada AO EMG
+const int pinPot = 35; // Conectada ao Potenciometro 
 
 int readEMGValue() {
   return analogRead(pinEMG);
@@ -273,7 +273,7 @@ void loop() {
   if (millis() - lastReadTime >= readInterval) {
     lastReadTime = millis();
     int valorADC = analogRead(pinPot); // Lê o valor analógico na porta do potenciômetro
-    float resistencia = map(valorADC, 0, 4095, 0, 200000); // Mapeia o valor ADC para um intervalo de resistência
+    float resistencia = map(valorADC, 0, 4095, 0, 100000); // Mapeia o valor ADC para um intervalo de resistência
     Serial.println(resistencia); // Imprime a resistência do potenciômetro
   }
 }
