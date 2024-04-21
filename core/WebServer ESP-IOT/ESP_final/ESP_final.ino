@@ -253,7 +253,6 @@ void setup() {
 
   server.begin();
 
-  pinMode(32, INPUT);
 
   Serial.println("Server started");
 }
@@ -273,7 +272,7 @@ void loop() {
   if (millis() - lastReadTime >= readInterval) {
     lastReadTime = millis();
     int valorADC = analogRead(pinPot); // Lê o valor analógico na porta do potenciômetro
-    float resistencia = map(valorADC, 0, 4095, 0, 100000); // Mapeia o valor ADC para um intervalo de resistência
+    float resistencia = map(valorADC, 0, 4095, 0, 10000); // Mapeia o valor ADC para um intervalo de resistência
     Serial.println(resistencia); // Imprime a resistência do potenciômetro
   }
 }
