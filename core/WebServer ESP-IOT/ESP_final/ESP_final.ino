@@ -2,11 +2,10 @@
 #include <WebServer.h>
 #include <Arduino.h>
 #include <fft.h>
-#include "SPIFFS.h"
 
 // Definição das credenciais de WiFi
-const char *ssid = "Martins WiFi6";
-const char *password = "17031998";
+const char *ssid = "Net";
+const char *password = "12345678";
 
 // Inicialização do servidor web na porta 80
 WebServer server(80);
@@ -150,7 +149,7 @@ void handleRoot() {
       "<div id='resistanceBox'>Ganho Total no circuito</div>" // Exibe o valor do ganho
       "<button id='startButton' class='button start' onclick='start()' disabled>Iniciar</button>"
       "<button class='button stop' onclick='stop()'>Parar</button>"
-      "<button class='button save' onclick='saveTableData()'>Salvar</button>"
+      "<button class='button save' onclick='save()'>Salvar</button>"
       "<button id='showTableButton' class='button table' onclick='showTable()' disabled>Ver Tabela</button>"
       "<button id='fftButton' class='button fft' onclick='startFFT()'>Espectro de Frequencia</button>" // Botão para plotar o espectro de frequência
       "<div id='tableContainer' class='hidden'>"
@@ -290,30 +289,8 @@ void handleRoot() {
       "  document.getElementById('startButton').disabled = false;"
       "  updatingData = false;"
       "}"
-      "function saveTableData() {"
-      "  var tableData = [];"
-      "  dataArray.forEach(function(data, index) {"
-      "    tableData.push({"
-      "      index: index + 1,"
-      "      value: data.y"
-      "    });"
-      "  });"
-      "  fetch('/saveTable', {"
-      "    method: 'POST',"
-      "    headers: {"
-      "      'Content-Type': 'application/json'"
-      "    },"
-      "    body: JSON.stringify(tableData)"
-      "  }).then(response => {"
-      "    if (response.ok) {"
-      "      alert('Dados da tabela salvos com sucesso!');"
-      "    } else {"
-      "      alert('Erro ao salvar os dados da tabela!');"
-      "    }"
-      "  }).catch(error => {"
-      "    console.error('Erro ao enviar dados da tabela:', error);"
-      "    alert('Erro ao enviar dados da tabela!');"
-      "  });"
+      "function save() {"
+      "  alert('Dados salvos!');"
       "}"
       "function showTable() {"
       "  var tableContainer = document.getElementById('tableContainer');"
@@ -349,12 +326,6 @@ void setup() {
   pinMode(pinPot, INPUT);
   Serial.begin(115200);
 
-  // Inicializa o sistema de arquivos SPIFFS
-  if (!SPIFFS.begin(true)) {
-    Serial.println("Erro ao montar sistema de arquivos SPIFFS");
-    return;
-  }
-
   // Conecta-se à rede WiFi
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
@@ -376,22 +347,6 @@ void setup() {
     int resistencia = map(valorADC, 0, 4095, 0, 100000);
     float ganho = (resistencia/470)*6.6;
     server.send(200, "text/plain", String(ganho)); 
-  });
-  server.on("/saveTable", HTTP_POST, []() {
-    if (server.hasArg("plain")) {
-      String tableData = server.arg("plain");
-      // Salvar os dados em um arquivo de texto
-      File file = SPIFFS.open("/tableData.txt", FILE_WRITE);
-      if (file) {
-        file.println(tableData);
-        file.close();
-        server.send(200, "text/plain", "Dados da tabela salvos com sucesso!");
-      } else {
-        server.send(500, "text/plain", "Erro ao salvar os dados da tabela!");
-      }
-    } else {
-      server.send(400, "text/plain", "Requisição inválida!");
-    }
   });
 
   // Inicia o servidor web
