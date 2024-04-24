@@ -4,8 +4,8 @@
 #include <fft.h>
 
 // Definição das credenciais de WiFi
-const char *ssid = "Net";
-const char *password = "12345678";
+const char *ssid = "Martins WiFi6";
+const char *password = "17031998";
 
 // Inicialização do servidor web na porta 80
 WebServer server(80);
