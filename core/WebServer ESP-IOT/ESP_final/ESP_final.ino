@@ -198,7 +198,7 @@ void handleRoot() {
       "        },"
       "        y: {"
       "          suggestedMin: 0,"
-      "          suggestedMax: 5000"
+      "          suggestedMax: 20"
       "        }"
       "      }"
       "    }"
@@ -344,6 +344,7 @@ void setup() {
   });
   server.on("/resistancevalue", HTTP_GET, []() {
     int valorADC = analogRead(pinPot);
+    Serial.println(valorADC);
     int resistencia = map(valorADC, 0, 4095, 0, 100000);
     float ganho = (resistencia/470)*6.6;
     server.send(200, "text/plain", String(ganho)); 
