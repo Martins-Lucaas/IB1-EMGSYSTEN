@@ -1,7 +1,6 @@
 #include <WiFi.h>
 #include <WebServer.h>
 #include <Arduino.h>
-#include <fft.h>
 
 // Definição das credenciais de WiFi
 const char *ssid = "Martins WiFi6";
